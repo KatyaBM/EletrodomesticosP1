@@ -2,28 +2,24 @@ public class Eletrodomestico {
     private boolean ligado;
     private final String marcaModelo;
 
-    public Eletrodomestico(boolean ligado, String marcaModelo){
-        this.ligado = ligado;
+    public Eletrodomestico(String marcaModelo){
+        ligado = false;
         this.marcaModelo = marcaModelo;
     }
 
     public boolean getLigado() {
         return ligado;
-    }
+    }// para saber o estado do objeto
 
-    public void setLigado(boolean ligado) {
-        this.ligado = ligado;
-    }
-
-    public String getMarcaModelo() {
+     public String getMarcaModelo() {
         return marcaModelo;
     }
 
-    public boolean ligar(){
-            return true; //ligado
+    public void ligar(){
+            ligado = true; //ligado
     }
-    public boolean desligar(){
-        return false;//desligado
+    public void desligar(){
+            ligado = false;//desligado
     }
 
     @Override

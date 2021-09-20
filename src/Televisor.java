@@ -3,60 +3,53 @@ import java.util.Arrays;
 
 public class Televisor extends Eletrodomestico{
     private int canal;
-    private int[] numeroMaxCanais;
+    private int numeroMaxCanais;
 
-    public Televisor(boolean ligado, String marcaModelo,int canal){
-        super(ligado, marcaModelo);
+    public Televisor(String marcaModelo,int numeroMaxCanais, int canal){
+        super(marcaModelo);
         this.canal = canal;
-        this.numeroMaxCanais = new int [10];
+        this.numeroMaxCanais = numeroMaxCanais;
     }
 
     public int getCanal() {
         return canal;
     }
+    public int getNumeroMaxCanais(){
+        return numeroMaxCanais;
+    }
 
     public void setCanal(int canal) {
+        if(canal <= 0 || canal > numeroMaxCanais)
+            throw new IllegalArgumentException("Canal deve ser maior que 0 e" +
+                    "menor que o numero maximo de canais");
         this.canal = canal;
     }
 
-    public void setNumeroMaxCanais(int[] numeroMaxCanais) {
+    public void setNumeroMaxCanais(int numeroMaxCanais) {
+        if(numeroMaxCanais <= 0)
+            throw new IllegalArgumentException("Numero maximo de canais deve ser" +
+                    "maior que 0");
         this.numeroMaxCanais = numeroMaxCanais;
     }
-    public void adicionaNumeroAosCanais(){
-        for(int i=0; i<numeroMaxCanais.length;i++){
-            numeroMaxCanais[i]=i+1;
-        }
-    }
-    public int canalAcima(int canal){
-        adicionaNumeroAosCanais();
-        for(int i=0; i<numeroMaxCanais.length;i++) {
-            if (numeroMaxCanais[i] == canal){
-                return canal = numeroMaxCanais[i + 1];
-            }else{
-                if(numeroMaxCanais[i] == numeroMaxCanais.length)
-                    numeroMaxCanais[i]=1;
-            }
-        }
-        return canal;
+
+    public void canalAcima(int canal){
+        if(getCanal() == getNumeroMaxCanais())
+            this.canal = 1;
+        else
+            this.canal++;
     }
 
-    public int canalAbaixo(int canal){
-        adicionaNumeroAosCanais();
-        for(int i=1; i<numeroMaxCanais.length;i++) {
-            if (numeroMaxCanais[i] == canal){
-                return canal = numeroMaxCanais[i - 1];
-            }else{
-                if(numeroMaxCanais[i] == numeroMaxCanais.length)
-                    numeroMaxCanais[i]=1;
-            }
-        }
-        return canal;
+    public void canalAbaixo(int canal){
+        if(getCanal() == 1)
+            this.canal = this.numeroMaxCanais;
+        else
+            this.canal--;
     }
 
     @Override
     public String toString() {
-        return super.toString() +
-                "\nCanal: " + getCanal() +
-                "\nNumero Maximo de Canais: " + numeroMaxCanais.length;
+        return "Televisor" + super.toString() +
+                "Numero maximo de canais: " + getNumeroMaxCanais() +
+                (getLigado()? "Canal: " + getCanal() : "");
     }
 }
